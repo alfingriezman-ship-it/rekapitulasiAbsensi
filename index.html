@@ -8,98 +8,127 @@
     <!-- Scripts & Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Fonts -->
+    <!-- Fonts: Plus Jakarta Sans for a modern, fresh look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        body { font-family: 'Inter', sans-serif; color: #1e293b; background-color: #f8fafc; }
-        h1, h2, h3, h4, h5, h6, .font-poppins { font-family: 'Poppins', sans-serif; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            color: #1e293b; 
+            background-color: #f1f5f9; 
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
         
+        .glass-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
         .modern-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
         }
 
-        .modern-header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        .modern-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
         }
 
         .form-input {
             width: 100%;
-            padding: 0.55rem 0.85rem;
+            padding: 0.6rem 1rem;
             background-color: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
             font-size: 0.875rem;
             color: #334155;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         
         .form-input:focus {
             outline: none;
             background-color: #ffffff;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
         }
 
-        .table-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
-        .table-scroll::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px;}
-        .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .table-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+        .table-scroll::-webkit-scrollbar-track { background: #f8fafc; border-radius: 10px;}
+        .table-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .table-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        .fade-in { animation: fadeIn 0.3s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .tab-btn {
-            border-bottom: 2px solid transparent;
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
         .tab-btn.active {
-            border-bottom-color: #4f46e5;
-            color: #4f46e5;
+            background-color: #ffffff;
+            color: #2563eb;
             font-weight: 700;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
+        /* Custom Scrollbar for the whole page */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Print Styles Revamp */
         @media print {
+            @page { margin: 10mm; size: landscape; }
             .no-print { display: none !important; }
-            body { background: #fff; color: #000; }
-            .modern-card { border: none; box-shadow: none; }
-            .print-header { display: block !important; text-align: center; margin-bottom: 20px; }
+            body { background: #fff !important; color: #000; overflow: visible; font-size: 10pt; }
+            .modern-card { border: 1px solid #000 !important; box-shadow: none !important; border-radius: 0 !important; margin-bottom: 20px;}
+            .print-header { display: flex !important; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 25px; border-bottom: 2px solid #000; padding-bottom: 15px; }
+            table { width: 100% !important; border-collapse: collapse !important; }
+            th, td { border: 1px solid #000 !important; padding: 6px !important; text-align: left; font-size: 9pt; }
+            th { background-color: #f3f4f6 !important; -webkit-print-color-adjust: exact; }
+            .badge-print { border: 1px solid #000; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
         }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between text-slate-800">
 
     <!-- FLOATING WA CS SEKOLAH -->
-    <a href="https://wa.me/6281515561069?text=Halo%20Admin%20MAS%20Miftahul%20Ulum,%20saya%20ingin%20bertanya%20mengenai%20rekap%20presensi%20siswa." target="_blank" class="no-print fixed bottom-6 right-6 z-[99] bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded-full flex items-center gap-2 text-sm font-semibold shadow-lg transition-transform hover:-translate-y-1">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+    <a href="https://wa.me/6281515561069?text=Halo%20Admin%20MAS%20Miftahul%20Ulum,%20saya%20ingin%20bertanya%20mengenai%20rekap%20presensi%20siswa." target="_blank" class="no-print fixed bottom-6 right-6 z-[99] bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-5 py-3 rounded-2xl flex items-center gap-2 text-sm font-bold shadow-[0_10px_20px_-10px_rgba(16,185,129,0.7)] transition-all hover:-translate-y-2 hover:scale-105">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
         <span>Bantuan Admin</span>
     </a>
 
     <!-- HEADER / NAVIGATION -->
-    <header class="modern-header sticky top-0 z-50 no-print">
-        <div class="max-w-[90rem] mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo MAS Miftahul Ulum" class="w-10 h-10 md:w-12 md:h-12 object-contain">
+    <header class="glass-header sticky top-0 z-50 no-print">
+        <div class="max-w-[90rem] mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-100">
+                    <img src="https://drive.google.com/thumbnail?id=1xj5AeEbWisIpBlXpwJ_tbW7wMM8NsjjQ&sz=w500" alt="Logo MAS Miftahul Ulum" class="w-10 h-10 md:w-12 md:h-12 object-contain">
+                </div>
                 <div>
-                    <h1 class="text-slate-900 font-poppins font-bold text-base md:text-xl leading-tight uppercase">Portal Rekap Presensi Sesi & Mapel</h1>
-                    <p class="text-indigo-600 text-[11px] md:text-xs font-semibold">MAS Miftahul Ulum Lenteng &bull; Dashboard Wali Kelas</p>
+                    <h1 class="text-slate-900 font-extrabold text-lg md:text-2xl tracking-tight uppercase">Portal Presensi</h1>
+                    <p class="text-blue-600 text-xs md:text-sm font-semibold tracking-wide">MAS Miftahul Ulum Lenteng &bull; Dashboard Wali Kelas</p>
                 </div>
             </div>
-            <div class="flex items-center gap-2">
-                <button onclick="fetchSpreadsheetData()" class="flex items-center gap-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-md text-xs font-semibold transition-colors border border-indigo-200">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                    <span>Muat Ulang</span>
+            <div class="flex items-center gap-3">
+                <button onclick="fetchSpreadsheetData()" class="flex items-center gap-2 bg-white hover:bg-blue-50 text-blue-700 px-4 py-2 rounded-xl text-sm font-bold shadow-sm transition-all border border-blue-100 hover:border-blue-300">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    <span class="hidden sm:inline">Muat Ulang</span>
                 </button>
-                <div id="sync-status" class="hidden sm:flex items-center gap-2 bg-green-50 text-green-700 border border-green-200 px-3 py-1.5 rounded-md text-xs font-medium">
-                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                    <span>Server Aktif</span>
+                <div id="sync-status" class="hidden sm:flex items-center gap-2 bg-emerald-50 text-emerald-700 border border-emerald-200 px-4 py-2 rounded-xl text-sm font-bold shadow-sm">
+                    <span class="relative flex h-3 w-3">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                    </span>
+                    <span>Sistem Online</span>
                 </div>
             </div>
         </div>
@@ -107,86 +136,158 @@
 
     <!-- PRINT ONLY HEADER -->
     <div class="hidden print-header">
-        <h1 class="text-xl font-bold uppercase">MAS MIFTAHUL ULUM LENTENG</h1>
-        <h2 class="text-md font-semibold">Laporan Rekapitulasi Presensi & Sesi Mata Pelajaran Siswa</h2>
-        <p class="text-xs text-slate-500" id="print-date-info"></p>
-        <hr class="my-3 border-slate-300">
+        <h1 class="text-2xl font-black uppercase text-center mb-1">MAS MIFTAHUL ULUM LENTENG</h1>
+        <h2 class="text-lg font-bold text-center mb-2">Laporan Rekapitulasi Presensi & Sesi Mata Pelajaran Siswa</h2>
+        <p class="text-sm text-slate-700 text-center" id="print-date-info"></p>
     </div>
 
-    <main class="max-w-[90rem] mx-auto px-4 py-6 md:py-8 w-full flex-grow space-y-6">
+    <main class="max-w-[90rem] mx-auto px-4 py-8 md:py-10 w-full flex-grow space-y-8">
 
         <!-- HEADER TITLE & TAB SWITCHER -->
-        <div class="no-print flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-4">
+        <div class="no-print flex flex-col md:flex-row md:items-end md:justify-between gap-6 pb-2">
             <div>
-                <h2 class="text-2xl font-poppins font-bold text-slate-800">Rekapitulasi Kehadiran & Sesi KBM</h2>
-                <p class="text-xs md:text-sm text-slate-500 mt-0.5">Monitoring tingkat kehadiran siswa, jam pelajaran diikuti, dan log presensi mata pelajaran secara presisi.</p>
+                <h2 class="text-3xl font-extrabold text-slate-800 tracking-tight">Ikhtisar Kehadiran</h2>
+                <p class="text-sm text-slate-500 mt-1 font-medium">Monitoring tingkat kehadiran siswa, jam pelajaran diikuti, dan log presensi secara real-time.</p>
             </div>
-            <!-- Tab Navigation -->
-            <div class="flex items-center gap-2 bg-slate-200/70 p-1 rounded-lg self-start md:self-auto text-xs md:text-sm font-semibold">
-                <button onclick="switchTab('tab-rekap')" id="btn-tab-rekap" class="tab-btn active px-3.5 py-1.5 rounded-md bg-white text-indigo-700 shadow-sm">
-                    📊 Rekapitulasi Per Siswa
+            <!-- Tab Navigation (Pill Style) -->
+            <div class="flex items-center p-1.5 bg-slate-200/80 rounded-2xl self-start md:self-auto text-sm font-bold shadow-inner">
+                <button onclick="switchTab('tab-rekap')" id="btn-tab-rekap" class="tab-btn active px-5 py-2.5 rounded-xl text-slate-500 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    Rekap Siswa
                 </button>
-                <button onclick="switchTab('tab-log')" id="btn-tab-log" class="tab-btn px-3.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900">
-                    🕒 Log Transaksi Sesi
+                <button onclick="switchTab('tab-log')" id="btn-tab-log" class="tab-btn px-5 py-2.5 rounded-xl text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Log Sesi
                 </button>
-                <button onclick="switchTab('tab-walikelas')" id="btn-tab-walikelas" class="tab-btn px-3.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900">
-                    👨‍🏫 Toolkit Wali Kelas
+                <button onclick="switchTab('tab-walikelas')" id="btn-tab-walikelas" class="tab-btn px-5 py-2.5 rounded-xl text-slate-500 hover:text-slate-800 flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    Menu Wali Kelas
                 </button>
             </div>
         </div>
 
         <!-- INDICATOR LOADING -->
-        <div id="loading-spinner" class="text-center py-20 fade-in">
-            <div class="inline-block w-12 h-12 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mb-4"></div>
-            <p class="text-slate-600 font-medium text-sm">Menghubungkan ke database presensi & mengunduh sesi mata pelajaran...</p>
+        <div id="loading-spinner" class="text-center py-32 fade-in">
+            <div class="inline-block relative w-20 h-20 mb-6">
+                <div class="absolute inset-0 border-4 border-blue-100 rounded-full"></div>
+                <div class="absolute inset-0 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+            </div>
+            <p class="text-slate-500 font-bold text-lg tracking-wide animate-pulse">Mensinkronisasi Data Presensi...</p>
         </div>
 
         <!-- ERROR NOTIFICATION -->
-        <div id="error-message" class="hidden bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-md font-medium text-sm shadow-sm fade-in"></div>
+        <div id="error-message" class="hidden modern-card border-l-8 border-l-red-500 bg-white p-6 fade-in flex items-center gap-4">
+            <div class="bg-red-100 p-3 rounded-full text-red-600">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </div>
+            <div>
+                <h3 class="text-red-700 font-bold text-lg">Koneksi Gagal</h3>
+                <p class="text-slate-600 font-medium mt-1" id="error-text">Gagal memuat data dari server Spreadsheet. Pastikan jaringan internet aktif.</p>
+            </div>
+        </div>
 
         <!-- MAIN CONTENT CONTAINER -->
-        <div id="main-dashboard" class="hidden space-y-6 fade-in">
+        <div id="main-dashboard" class="hidden space-y-8 fade-in">
+
+            <!-- STATISTIK RINGKASAN CARDS (REDESIGNED) -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6">
+                <div class="bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl p-5 text-white shadow-lg shadow-blue-500/30 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-blue-100 font-bold text-[11px] uppercase tracking-wider mb-2">Siswa Terdaftar</div>
+                        <div id="stat-total-siswa" class="text-4xl font-black">0</div>
+                        <div class="text-blue-200 text-xs mt-2 font-medium">Berdasarkan filter</div>
+                    </div>
+                    <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                </div>
+                <div class="bg-gradient-to-br from-emerald-400 to-green-600 rounded-2xl p-5 text-white shadow-lg shadow-emerald-500/30 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-emerald-100 font-bold text-[11px] uppercase tracking-wider mb-2">Total Hadir</div>
+                        <div id="stat-total-hadir" class="text-4xl font-black">0</div>
+                        <div class="text-emerald-200 text-xs mt-2 font-medium">Sesi tepat waktu</div>
+                    </div>
+                    <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl p-5 text-white shadow-lg shadow-orange-500/30 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-orange-100 font-bold text-[11px] uppercase tracking-wider mb-2">Terlambat</div>
+                        <div id="stat-total-terlambat" class="text-4xl font-black">0</div>
+                        <div class="text-orange-100 text-xs mt-2 font-medium">Lewat batas waktu</div>
+                    </div>
+                    <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl p-5 text-white shadow-lg shadow-yellow-500/30 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-yellow-100 font-bold text-[11px] uppercase tracking-wider mb-2">Sakit & Izin</div>
+                        <div id="stat-total-sakit-izin" class="text-4xl font-black">0</div>
+                        <div class="text-yellow-100 text-xs mt-2 font-medium">Berpengantar</div>
+                    </div>
+                    <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
+                </div>
+                <div class="bg-gradient-to-br from-red-500 to-rose-600 rounded-2xl p-5 text-white shadow-lg shadow-red-500/30 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-red-100 font-bold text-[11px] uppercase tracking-wider mb-2">Total Alpha</div>
+                        <div id="stat-total-alpha" class="text-4xl font-black">0</div>
+                        <div class="text-red-200 text-xs mt-2 font-medium">Tanpa keterangan</div>
+                    </div>
+                    <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <div class="bg-gradient-to-br from-fuchsia-600 to-purple-700 rounded-2xl p-5 text-white shadow-lg shadow-purple-500/30 relative overflow-hidden">
+                    <div class="relative z-10">
+                        <div class="text-fuchsia-200 font-bold text-[11px] uppercase tracking-wider mb-2">Perhatian Khusus</div>
+                        <div id="stat-total-alert" class="text-4xl font-black">0</div>
+                        <div class="text-fuchsia-200 text-[10px] mt-2 font-bold leading-tight">Alpha &ge; 3 / Kehadiran &lt; 75%</div>
+                    </div>
+                    <svg class="absolute -right-4 -bottom-4 w-24 h-24 text-white opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                </div>
+            </div>
 
             <!-- GLOBAL FILTER SECTION -->
-            <div class="modern-card p-4 bg-white no-print">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-3">
+            <div class="modern-card p-6 bg-white no-print">
+                <div class="flex items-center gap-3 mb-5 border-b border-slate-100 pb-4">
+                    <div class="bg-slate-100 p-2 rounded-lg text-slate-500">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-slate-800 text-lg">Filter Data & Pencarian</h3>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
                     <!-- Cari Siswa -->
                     <div class="lg:col-span-2 relative">
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Cari Nama / NIS</label>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Cari Nama / NIS</label>
                         <div class="relative">
-                            <svg class="absolute left-3 top-2.5 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            <input type="text" id="filter-search" onkeyup="applyFilters()" placeholder="Ketik Nama atau NIS..." class="form-input pl-9 text-xs">
+                            <svg class="absolute left-4 top-3 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" id="filter-search" onkeyup="applyFilters()" placeholder="Ketik Nama atau NIS..." class="form-input pl-11 text-sm font-medium">
                         </div>
                     </div>
                     
                     <!-- Filter Kelas -->
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Filter Kelas</label>
-                        <select id="filter-class" onchange="applyFilters()" class="form-input text-xs cursor-pointer">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Filter Kelas</label>
+                        <select id="filter-class" onchange="applyFilters()" class="form-input text-sm font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.7rem_auto] bg-no-repeat bg-[position:right_1rem_center]">
                             <option value="">Semua Kelas</option>
                         </select>
                     </div>
 
                     <!-- Filter Mapel -->
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Mata Pelajaran</label>
-                        <select id="filter-mapel" onchange="applyFilters()" class="form-input text-xs cursor-pointer">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Mata Pelajaran</label>
+                        <select id="filter-mapel" onchange="applyFilters()" class="form-input text-sm font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.7rem_auto] bg-no-repeat bg-[position:right_1rem_center]">
                             <option value="">Semua Mapel</option>
                         </select>
                     </div>
 
                     <!-- Filter Sesi / Jam Ke -->
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Sesi / Jam Ke</label>
-                        <select id="filter-sesi" onchange="applyFilters()" class="form-input text-xs cursor-pointer">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Sesi / Jam</label>
+                        <select id="filter-sesi" onchange="applyFilters()" class="form-input text-sm font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.7rem_auto] bg-no-repeat bg-[position:right_1rem_center]">
                             <option value="">Semua Sesi</option>
                         </select>
                     </div>
 
-                    <!-- Filter Tanggal & Bulan (Combined grid col span in sub container or stacked) -->
+                    <!-- Filter Status -->
                     <div class="sm:col-span-2 lg:col-span-1">
-                        <label class="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">Status Presence</label>
-                        <select id="filter-status" onchange="applyFilters()" class="form-input text-xs cursor-pointer">
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Status</label>
+                        <select id="filter-status" onchange="applyFilters()" class="form-input text-sm font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.7rem_auto] bg-no-repeat bg-[position:right_1rem_center]">
                             <option value="">Semua Status</option>
                             <option value="hadir">Hadir</option>
                             <option value="terlambat">Terlambat</option>
@@ -198,14 +299,14 @@
                 </div>
 
                 <!-- SECONDARY ROW FILTERS: TANGGAL & BULAN -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-3 pt-3 border-t border-slate-100 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-5">
                     <div>
-                        <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Filter Tanggal Spesifik</label>
-                        <input type="date" id="filter-date" onchange="applyFilters()" class="form-input text-xs cursor-pointer">
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Tanggal Spesifik</label>
+                        <input type="date" id="filter-date" onchange="applyFilters()" class="form-input text-sm cursor-pointer font-medium">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1">Filter Bulan (Akumulasi)</label>
-                        <select id="filter-month" onchange="applyFilters()" class="form-input text-xs cursor-pointer">
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-2">Bulan (Akumulasi)</label>
+                        <select id="filter-month" onchange="applyFilters()" class="form-input text-sm font-medium cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:0.7rem_auto] bg-no-repeat bg-[position:right_1rem_center]">
                             <option value="">Semua Bulan</option>
                             <option value="01">Januari</option><option value="02">Februari</option><option value="03">Maret</option>
                             <option value="04">April</option><option value="05">Mei</option><option value="06">Juni</option>
@@ -213,84 +314,49 @@
                             <option value="10">Oktober</option><option value="11">November</option><option value="12">Desember</option>
                         </select>
                     </div>
-                    <div class="sm:col-span-2 flex items-end justify-end gap-2">
-                        <button onclick="resetFilters()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-md font-semibold text-xs transition-colors">
+                    <div class="md:col-span-2 flex items-end justify-end gap-3">
+                        <button onclick="resetFilters()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-all">
                             Reset Filter
                         </button>
-                        <button onclick="exportToCSV()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-md font-semibold text-xs flex items-center gap-1.5 shadow-sm transition-colors">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                            Export Excel (CSV)
+                        <button onclick="exportToCSV()" class="px-5 py-2.5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                            Export (CSV)
                         </button>
-                        <button onclick="window.print()" class="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md font-semibold text-xs flex items-center gap-1.5 shadow-sm transition-colors">
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
-                            Cetak Laporan
+                        <button onclick="window.print()" class="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            Cetak
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- STATISTIK RINGKASAN CARDS -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div class="modern-card p-3.5 border-l-4 border-l-indigo-500">
-                    <div class="text-[11px] font-bold text-slate-500 uppercase">Siswa Terdaftar</div>
-                    <div id="stat-total-siswa" class="text-2xl font-poppins font-bold text-slate-800 mt-1">0</div>
-                    <span class="text-[10px] text-slate-400">Tersaring dalam filter</span>
-                </div>
-                <div class="modern-card p-3.5 border-l-4 border-l-emerald-500">
-                    <div class="text-[11px] font-bold text-slate-500 uppercase">Total Sesi Hadir</div>
-                    <div id="stat-total-hadir" class="text-2xl font-poppins font-bold text-emerald-600 mt-1">0</div>
-                    <span class="text-[10px] text-slate-400">Tepat waktu</span>
-                </div>
-                <div class="modern-card p-3.5 border-l-4 border-l-orange-500">
-                    <div class="text-[11px] font-bold text-slate-500 uppercase">Terlambat Sesi</div>
-                    <div id="stat-total-terlambat" class="text-2xl font-poppins font-bold text-orange-500 mt-1">0</div>
-                    <span class="text-[10px] text-slate-400">Lewat batas waktu</span>
-                </div>
-                <div class="modern-card p-3.5 border-l-4 border-l-amber-500">
-                    <div class="text-[11px] font-bold text-slate-500 uppercase">Sakit & Izin</div>
-                    <div id="stat-total-sakit-izin" class="text-2xl font-poppins font-bold text-amber-600 mt-1">0</div>
-                    <span class="text-[10px] text-slate-400">Berpengantar / Surat</span>
-                </div>
-                <div class="modern-card p-3.5 border-l-4 border-l-red-500 bg-red-50/20">
-                    <div class="text-[11px] font-bold text-slate-500 uppercase">Total Alpha</div>
-                    <div id="stat-total-alpha" class="text-2xl font-poppins font-bold text-red-600 mt-1">0</div>
-                    <span class="text-[10px] text-red-400 font-medium">Tanpa Keterangan</span>
-                </div>
-                <div class="modern-card p-3.5 border-l-4 border-l-purple-500 bg-purple-50/20">
-                    <div class="text-[11px] font-bold text-slate-500 uppercase">Perlu Perhatian</div>
-                    <div id="stat-total-alert" class="text-2xl font-poppins font-bold text-purple-700 mt-1">0</div>
-                    <span class="text-[10px] text-purple-500 font-medium">Alpha &ge; 3 / Absen &lt; 75%</span>
-                </div>
-            </div>
-
-            <!-- TAB 1: TABEL REKAPITULASI SISWA (Aksen Wali Kelas) -->
+            <!-- TAB 1: TABEL REKAPITULASI SISWA -->
             <div id="view-tab-rekap" class="modern-card overflow-hidden bg-white">
-                <div class="p-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50">
                     <div>
-                        <h3 class="font-poppins font-bold text-slate-800 text-base">Rekapitulasi Kehadiran Siswa & Sesi Mata Pelajaran</h3>
-                        <p class="text-xs text-slate-500">Menampilkan akumulasi sesi kelas yang diikuti oleh masing-masing siswa.</p>
+                        <h3 class="font-extrabold text-slate-800 text-xl">Tabel Rekapitulasi Presensi & Sesi</h3>
+                        <p class="text-sm text-slate-500 mt-1 font-medium">Akumulasi sesi kelas yang diikuti oleh masing-masing siswa.</p>
                     </div>
-                    <span class="text-xs font-semibold px-2.5 py-1 bg-indigo-50 text-indigo-700 rounded border border-indigo-100" id="recap-count-badge">0 Siswa</span>
+                    <span class="text-sm font-extrabold px-4 py-2 bg-blue-100 text-blue-700 rounded-xl border border-blue-200 shadow-sm" id="recap-count-badge">0 Siswa</span>
                 </div>
 
                 <div class="overflow-x-auto table-scroll">
                     <table class="min-w-full text-left border-collapse">
-                        <thead class="bg-slate-50 text-slate-600 text-[11px] uppercase font-bold border-b border-slate-200">
+                        <thead class="bg-white border-b-2 border-slate-200">
                             <tr>
-                                <th class="px-4 py-3 whitespace-nowrap">NIS</th>
-                                <th class="px-4 py-3 whitespace-nowrap">Nama Siswa</th>
-                                <th class="px-3 py-3 whitespace-nowrap">Kelas</th>
-                                <th class="px-2 py-3 text-center whitespace-nowrap text-emerald-700">Hadir</th>
-                                <th class="px-2 py-3 text-center whitespace-nowrap text-orange-600">Late</th>
-                                <th class="px-2 py-3 text-center whitespace-nowrap text-amber-600">Sakit</th>
-                                <th class="px-2 py-3 text-center whitespace-nowrap text-blue-600">Izin</th>
-                                <th class="px-2 py-3 text-center whitespace-nowrap text-red-600">Alpha</th>
-                                <th class="px-4 py-3 whitespace-nowrap min-w-[280px]">Catatan Sesi & Mapel Terakhir</th>
-                                <th class="px-3 py-3 text-center whitespace-nowrap">% Kehadiran</th>
-                                <th class="px-3 py-3 text-center whitespace-nowrap no-print">Aksi Wali Kelas</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Siswa (NIS)</th>
+                                <th class="px-4 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Kelas</th>
+                                <th class="px-3 py-4 text-center text-xs font-bold text-emerald-600 uppercase tracking-wider whitespace-nowrap">Hadir</th>
+                                <th class="px-3 py-4 text-center text-xs font-bold text-orange-500 uppercase tracking-wider whitespace-nowrap">Late</th>
+                                <th class="px-3 py-4 text-center text-xs font-bold text-amber-500 uppercase tracking-wider whitespace-nowrap">Sakit</th>
+                                <th class="px-3 py-4 text-center text-xs font-bold text-blue-500 uppercase tracking-wider whitespace-nowrap">Izin</th>
+                                <th class="px-3 py-4 text-center text-xs font-bold text-red-500 uppercase tracking-wider whitespace-nowrap">Alpha</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap min-w-[280px]">Catatan Sesi Terakhir</th>
+                                <th class="px-4 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">%</th>
+                                <th class="px-6 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap no-print">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="recap-table-body" class="divide-y divide-slate-100 text-xs">
+                        <tbody id="recap-table-body" class="divide-y divide-slate-100 text-sm">
                             <!-- Populated via JS -->
                         </tbody>
                     </table>
@@ -299,74 +365,87 @@
 
             <!-- TAB 2: LOG TRANSAKSI PRESENSI PER SESI MAPEL -->
             <div id="view-tab-log" class="hidden modern-card overflow-hidden bg-white">
-                <div class="p-4 border-b border-slate-200 flex justify-between items-center">
-                    <div>
-                        <h3 class="font-poppins font-bold text-slate-800 text-base">Log Presensi Sesi & Mata Pelajaran Real-Time</h3>
-                        <p class="text-xs text-slate-500">Daftar rincian setiap aktivitas entri presensi siswa per mata pelajaran dan jam sesi.</p>
-                    </div>
+                <div class="p-6 border-b border-slate-100 bg-slate-50/50">
+                    <h3 class="font-extrabold text-slate-800 text-xl">Log Transaksi Real-Time</h3>
+                    <p class="text-sm text-slate-500 mt-1 font-medium">Daftar rincian aktivitas entri presensi siswa per mata pelajaran dan jam sesi.</p>
                 </div>
 
                 <div class="overflow-x-auto table-scroll">
                     <table class="min-w-full text-left border-collapse">
-                        <thead class="bg-slate-50 text-slate-600 text-[11px] uppercase font-bold border-b border-slate-200">
+                        <thead class="bg-white border-b-2 border-slate-200">
                             <tr>
-                                <th class="px-4 py-3 whitespace-nowrap">Waktu & Tanggal</th>
-                                <th class="px-4 py-3 whitespace-nowrap">NIS</th>
-                                <th class="px-4 py-3 whitespace-nowrap">Nama Siswa</th>
-                                <th class="px-3 py-3 whitespace-nowrap">Kelas</th>
-                                <th class="px-4 py-3 whitespace-nowrap">Mata Pelajaran</th>
-                                <th class="px-3 py-3 whitespace-nowrap text-center">Sesi / Jam</th>
-                                <th class="px-3 py-3 text-center whitespace-nowrap">Status</th>
-                                <th class="px-4 py-3 whitespace-nowrap">Keterangan / Pengajar</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Waktu</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Siswa (NIS)</th>
+                                <th class="px-4 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Kelas</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Mata Pelajaran</th>
+                                <th class="px-4 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Sesi</th>
+                                <th class="px-4 py-4 text-center text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Status</th>
+                                <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Keterangan / Pengajar</th>
                             </tr>
                         </thead>
-                        <tbody id="log-table-body" class="divide-y divide-slate-100 text-xs">
+                        <tbody id="log-table-body" class="divide-y divide-slate-100 text-sm">
                             <!-- Populated via JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- TAB 3: TOOLKIT WALI KELAS (PENANGANAN SISWA & WHATSAPP GENERATOR) -->
-            <div id="view-tab-walikelas" class="hidden space-y-6">
-                <!-- Ringkasan Perhatian Wali Kelas -->
-                <div class="modern-card p-5 bg-white">
-                    <div class="flex items-center justify-between mb-4 border-b pb-3 border-slate-100">
+            <!-- TAB 3: TOOLKIT WALI KELAS (PENANGANAN SISWA & CETAK KARTU) -->
+            <div id="view-tab-walikelas" class="hidden space-y-8">
+                <!-- Ringkasan Perhatian Wali Kelas (CETAK KARTU DESIGN) -->
+                <div>
+                    <div class="flex items-center justify-between mb-5 no-print">
                         <div>
-                            <h3 class="font-poppins font-bold text-slate-800 text-base flex items-center gap-2">
-                                <span class="w-3 h-3 rounded-full bg-red-500"></span>
-                                Daftar Siswa Perlu Perhatian Khusus
+                            <h3 class="font-extrabold text-slate-800 text-2xl flex items-center gap-3">
+                                <span class="flex h-4 w-4 relative">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+                                </span>
+                                Kartu Peringatan Siswa
                             </h3>
-                            <p class="text-xs text-slate-500">Siswa dengan akumulasi Alpha &ge; 3 kali atau persentase kehadiran di bawah 75%.</p>
+                            <p class="text-sm text-slate-500 mt-1 font-medium">Siswa dengan akumulasi Alpha &ge; 3 kali atau persentase kehadiran di bawah 75%.</p>
                         </div>
+                        <button onclick="window.print()" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                            Cetak Kartu Laporan
+                        </button>
                     </div>
 
-                    <div id="alert-students-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <!-- Populated via JS -->
+                    <div id="alert-students-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated via JS with new Card Design -->
                     </div>
                 </div>
 
                 <!-- GENERATOR SURAT / PESAN WHATSAPP PANGGILAN -->
-                <div class="modern-card p-5 bg-white">
-                    <h3 class="font-poppins font-bold text-slate-800 text-base mb-2">Draft Generator Pesan Wali Kelas ke Orang Tua / Wali</h3>
-                    <p class="text-xs text-slate-500 mb-4">Pilih siswa di bawah ini untuk meng-generate format pesan konfirmasi ketidakhadiran ke orang tua via WhatsApp.</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="modern-card p-6 md:p-8 bg-white no-print">
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="bg-green-100 p-3 rounded-2xl text-green-600">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+                        </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Pilih Siswa</label>
-                            <select id="wa-student-select" onchange="generateWAMessage()" class="form-input text-xs">
+                            <h3 class="font-extrabold text-slate-800 text-lg">Generator Pesan WhatsApp Wali Kelas</h3>
+                            <p class="text-sm text-slate-500 font-medium">Buat draf pesan otomatis untuk konfirmasi ketidakhadiran ke orang tua/wali via WhatsApp.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">1. Pilih Siswa Bermasalah</label>
+                            <select id="wa-student-select" onchange="generateWAMessage()" class="form-input text-sm font-bold text-slate-700 shadow-sm">
                                 <option value="">-- Pilih Siswa --</option>
                             </select>
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="block text-xs font-semibold text-slate-600 mb-1">Preview Pesan WhatsApp</label>
-                            <textarea id="wa-message-preview" rows="5" class="form-input text-xs font-mono" readonly placeholder="Pilih siswa untuk melihat preview pesan..."></textarea>
-                            <div class="mt-2 flex justify-end gap-2">
-                                <button onclick="copyWAMessage()" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded font-semibold text-xs transition-colors">
-                                    📋 Salin Pesan
+                        <div class="lg:col-span-2">
+                            <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">2. Preview Pesan & Kirim</label>
+                            <textarea id="wa-message-preview" rows="6" class="form-input text-sm font-mono bg-white shadow-inner resize-none" readonly placeholder="Pilih siswa untuk melihat preview pesan..."></textarea>
+                            <div class="mt-4 flex flex-col sm:flex-row justify-end gap-3">
+                                <button onclick="copyWAMessage()" class="px-5 py-2.5 bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 rounded-xl font-bold text-sm transition-all shadow-sm flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                    Salin Teks
                                 </button>
-                                <button onclick="sendViaWA()" class="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded font-semibold text-xs flex items-center gap-1 transition-colors">
-                                    💬 Buka WhatsApp Web
+                                <button onclick="sendViaWA()" class="px-5 py-2.5 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-green-500/30 transition-all hover:-translate-y-0.5">
+                                    Buka WhatsApp Web
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                                 </button>
                             </div>
                         </div>
@@ -379,33 +458,40 @@
     </main>
 
     <!-- MODAL DETAIL SESI DIAKUI SISWA -->
-    <div id="modal-detail-student" class="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden fade-in">
-            <div class="p-4 bg-slate-800 text-white flex justify-between items-center">
-                <div>
-                    <h4 class="font-poppins font-bold text-sm md:text-base" id="modal-student-name">Detail Sesi Presensi Siswa</h4>
-                    <p class="text-[11px] text-slate-300" id="modal-student-info">NIS: - | Kelas: -</p>
+    <div id="modal-detail-student" class="fixed inset-0 z-[100] bg-slate-900/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden fade-in border border-slate-100">
+            <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-start bg-white">
+                <div class="flex gap-4 items-center">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl" id="modal-avatar">
+                        A
+                    </div>
+                    <div>
+                        <h4 class="font-extrabold text-lg text-slate-800" id="modal-student-name">Detail Sesi Presensi</h4>
+                        <p class="text-xs font-bold text-slate-500 mt-0.5" id="modal-student-info">NIS: - | Kelas: -</p>
+                    </div>
                 </div>
-                <button onclick="closeStudentModal()" class="text-slate-400 hover:text-white text-xl font-bold px-2">&times;</button>
+                <button onclick="closeStudentModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-red-100 hover:text-red-600 font-bold transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
             
-            <div class="p-4 overflow-y-auto flex-grow space-y-3 table-scroll" id="modal-student-timeline">
+            <div class="p-6 overflow-y-auto flex-grow bg-slate-50/50 table-scroll" id="modal-student-timeline">
                 <!-- Timeline items rendered dynamically -->
             </div>
 
-            <div class="p-3 bg-slate-50 border-t border-slate-200 flex justify-end">
-                <button onclick="closeStudentModal()" class="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-md text-xs font-semibold transition-colors">
-                    Tutup
+            <div class="p-4 bg-white border-t border-slate-100 flex justify-end">
+                <button onclick="closeStudentModal()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-sm font-bold transition-colors shadow-md">
+                    Tutup Detail
                 </button>
             </div>
         </div>
     </div>
 
     <!-- FOOTER -->
-    <footer class="mt-auto py-5 text-center border-t border-slate-200 bg-white no-print">
+    <footer class="mt-auto py-6 text-center border-t border-slate-200 bg-white no-print">
         <div class="max-w-4xl mx-auto px-4">
-            <p class="text-xs text-slate-600 font-medium">&copy; 2026 MAS Miftahul Ulum Lenteng</p>
-            <p class="text-[11px] text-slate-400 mt-0.5">Sistem Rekapitulasi Presensi Sesi Mata Pelajaran & Tool Wali Kelas</p>
+            <p class="text-sm text-slate-800 font-bold">&copy; 2026 MAS Miftahul Ulum Lenteng</p>
+            <p class="text-xs text-slate-500 font-medium mt-1">Sistem Rekapitulasi Presensi Sesi Mata Pelajaran & Tool Wali Kelas</p>
         </div>
     </footer>
 
@@ -418,7 +504,7 @@
         let currentFilteredData = [];
 
         document.addEventListener("DOMContentLoaded", async () => {
-            document.getElementById('print-date-info').innerText = "Dicetak pada: " + new Date().toLocaleString('id-ID');
+            document.getElementById('print-date-info').innerText = "Dicetak pada: " + new Date().toLocaleString('id-ID', { dateStyle: 'full', timeStyle: 'short' });
             await fetchSpreadsheetData();
         });
 
@@ -451,8 +537,8 @@
 
             } catch (err) {
                 spinner.classList.add('hidden');
-                errorBox.innerText = "Gagal memuat data dari server Spreadsheet. Pastikan jaringan internet aktif dan Apps Script terpublikasi.";
                 errorBox.classList.remove('hidden');
+                document.getElementById('error-text').innerText = "Gagal memuat data. Periksa jaringan atau URL Apps Script Anda.";
             }
         }
 
@@ -475,21 +561,18 @@
                 if(sesi && String(sesi).trim() !== '') sesiSet.add(String(sesi).trim());
             });
 
-            // Populate Kelas
             const classSelect = document.getElementById('filter-class');
             classSelect.innerHTML = '<option value="">Semua Kelas</option>';
             Array.from(classSet).sort().forEach(cls => {
                 classSelect.innerHTML += `<option value="${cls}">${cls}</option>`;
             });
 
-            // Populate Mapel
             const mapelSelect = document.getElementById('filter-mapel');
             mapelSelect.innerHTML = '<option value="">Semua Mapel</option>';
             Array.from(mapelSet).sort().forEach(mp => {
                 mapelSelect.innerHTML += `<option value="${mp}">${mp}</option>`;
             });
 
-            // Populate Sesi
             const sesiSelect = document.getElementById('filter-sesi');
             sesiSelect.innerHTML = '<option value="">Semua Sesi</option>';
             Array.from(sesiSet).sort().forEach(ss => {
@@ -499,8 +582,8 @@
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => {
-                b.classList.remove('active', 'bg-white', 'text-indigo-700', 'shadow-sm');
-                b.classList.add('text-slate-600');
+                b.classList.remove('active', 'bg-white', 'text-blue-600', 'shadow-md');
+                b.classList.add('text-slate-500');
             });
             
             document.getElementById('view-tab-rekap').classList.add('hidden');
@@ -508,8 +591,8 @@
             document.getElementById('view-tab-walikelas').classList.add('hidden');
 
             const activeBtn = document.getElementById('btn-' + tabId);
-            activeBtn.classList.add('active', 'bg-white', 'text-indigo-700', 'shadow-sm');
-            activeBtn.classList.remove('text-slate-600');
+            activeBtn.classList.add('active', 'bg-white', 'text-blue-600', 'shadow-md');
+            activeBtn.classList.remove('text-slate-500');
 
             document.getElementById('view-' + tabId).classList.remove('hidden');
         }
@@ -534,7 +617,6 @@
             const dateVal = document.getElementById('filter-date').value;
             const monthVal = document.getElementById('filter-month').value;
 
-            // 1. Filter Log History berdasarkan Kriteria Sesi & Waktu
             let filteredHistory = allHistory.filter(h => {
                 const hMapel = (h.mapel || h.mata_pelajaran || h.subject || '').trim();
                 const hSesi = String(h.sesi || h.jam_ke || h.session || '').trim();
@@ -559,10 +641,8 @@
                 return true;
             });
 
-            // Render Tab 2 (Log Sesi Real-Time)
             renderLogTable(filteredHistory);
 
-            // 2. Agregasi Per Siswa
             const historyAgg = {};
             filteredHistory.forEach(log => {
                 const nis = String(log.nis).trim();
@@ -581,7 +661,6 @@
                 historyAgg[nis].logs.push(log);
             });
 
-            // 3. Gabungkan Dengan Master Siswa
             let aggregateData = allStudents.map(student => {
                 const nis = String(student.nis).trim();
                 const stats = historyAgg[nis] || { hadir: 0, terlambat: 0, sakit: 0, izin: 0, alpha: 0, total: 0, logs: [] };
@@ -593,7 +672,6 @@
                 };
             });
 
-            // Tambahkan data siswa dari log jika belum tercatat di master siswa
             const masterNisSet = new Set(allStudents.map(s => String(s.nis).trim()));
             Object.keys(historyAgg).forEach(nis => {
                 if (!masterNisSet.has(nis)) {
@@ -607,19 +685,15 @@
                 }
             });
 
-            // 4. Filter Akhir berdasarkan Pencarian Nama/NIS & Kelas
             aggregateData = aggregateData.filter(item => {
                 const matchSearch = item.name.toLowerCase().includes(searchVal) || String(item.nis).includes(searchVal);
                 const matchClass = classVal === "" || item.className === classVal;
-                
-                // Jika filter mapel, sesi, tanggal, atau status spesifik dipilih, hanya tampilkan siswa yang ada record di filter tersebut
                 const isSpecificFilterActive = (mapelVal !== "" || sesiVal !== "" || dateVal !== "" || monthVal !== "" || statusVal !== "");
                 const matchActiveData = isSpecificFilterActive ? item.stats.total > 0 : true;
 
                 return matchSearch && matchClass && matchActiveData;
             });
 
-            // Sort berdasarkan Kelas lalu Nama
             aggregateData.sort((a, b) => {
                 if(a.className < b.className) return -1;
                 if(a.className > b.className) return 1;
@@ -628,9 +702,12 @@
 
             currentFilteredData = aggregateData;
 
-            // Render Dashboard Tab 1 & Tab 3
             renderRecapTable(aggregateData);
             renderWaliKelasTab(aggregateData);
+        }
+
+        function getInitials(name) {
+            return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
         }
 
         function renderRecapTable(data) {
@@ -638,7 +715,7 @@
             let sumHadir = 0, sumTerlambat = 0, sumSakit = 0, sumIzin = 0, sumAlpha = 0, totalAlertCount = 0;
 
             if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="11" class="px-6 py-12 text-center text-slate-400">Tidak ada data rekap presensi siswa yang cocok dengan filter.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="px-6 py-16 text-center text-slate-400 font-bold text-lg">Tidak ada data rekap presensi siswa yang cocok.</td></tr>`;
             } else {
                 tbody.innerHTML = data.map(item => {
                     const st = item.stats;
@@ -652,17 +729,15 @@
                     const totalHadirPositif = st.hadir + st.terlambat;
                     const persentase = st.total > 0 ? Math.round((totalHadirPositif / st.total) * 100) : 0;
                     
-                    // Alert Wali Kelas Flag
                     const isPerluPerhatian = st.alpha >= 3 || (st.total >= 4 && persentase < 75);
                     if (isPerluPerhatian) totalAlertCount++;
 
-                    let pctBadge = "bg-emerald-100 text-emerald-800 border-emerald-200";
-                    if (st.total === 0) pctBadge = "bg-slate-100 text-slate-500 border-slate-200";
-                    else if (persentase < 75) pctBadge = "bg-red-100 text-red-800 border-red-200 font-bold";
-                    else if (persentase < 85) pctBadge = "bg-amber-100 text-amber-800 border-amber-200";
+                    let pctBadge = "bg-emerald-100 text-emerald-700";
+                    if (st.total === 0) pctBadge = "bg-slate-100 text-slate-500";
+                    else if (persentase < 75) pctBadge = "bg-red-100 text-red-700";
+                    else if (persentase < 85) pctBadge = "bg-amber-100 text-amber-700";
 
-                    // Formating Last Session Detail
-                    let lastSessionText = '<span class="text-slate-400 italic">Belum ada sesi tercatat</span>';
+                    let lastSessionText = '<span class="text-slate-400 italic font-medium text-xs">Belum ada sesi</span>';
                     if (st.logs.length > 0) {
                         const lastLog = st.logs[st.logs.length - 1];
                         const mapel = lastLog.mapel || lastLog.mata_pelajaran || 'Mapel Umum';
@@ -675,41 +750,48 @@
                             if(!isNaN(d)) dateFmt = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' });
                         }
 
-                        lastSessionText = `<div class="leading-tight">
-                            <span class="font-bold text-slate-700">${mapel}</span> <span class="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 border border-slate-200">Jam/Sesi: ${sesi}</span><br>
-                            <span class="text-[10px] text-slate-500">${dateFmt} &bull; Status: <strong class="${statusLog==='ALPHA'?'text-red-600':statusLog==='HADIR'?'text-emerald-600':'text-amber-600'}">${statusLog}</strong></span>
+                        let statColor = statusLog === 'ALPHA' ? 'text-red-600' : (statusLog === 'HADIR' ? 'text-emerald-600' : 'text-amber-600');
+
+                        lastSessionText = `<div class="flex flex-col gap-0.5">
+                            <div class="flex items-center gap-2">
+                                <span class="font-extrabold text-slate-700 text-xs">${mapel}</span>
+                                <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-full font-bold text-slate-500">Sesi ${sesi}</span>
+                            </div>
+                            <span class="text-[11px] text-slate-500 font-medium">${dateFmt} &bull; <strong class="${statColor}">${statusLog}</strong></span>
                         </div>`;
                     }
 
                     return `
-                    <tr class="hover:bg-slate-50/80 transition-colors ${isPerluPerhatian ? 'bg-red-50/30' : ''}">
-                        <td class="px-4 py-3 font-mono font-medium text-slate-600">${item.nis}</td>
-                        <td class="px-4 py-3 font-bold text-slate-800 flex items-center gap-1.5">
-                            ${item.name}
-                            ${isPerluPerhatian ? '<span class="text-[10px] bg-red-100 text-red-700 px-1.5 py-0.5 rounded-full font-bold uppercase border border-red-200" title="Alpha >= 3 atau Absensi < 75%">⚠️ Perhatian</span>' : ''}
+                    <tr class="hover:bg-slate-50 transition-all ${isPerluPerhatian ? 'bg-red-50/40 hover:bg-red-50/60' : ''}">
+                        <td class="px-6 py-4">
+                            <div class="flex flex-col">
+                                <span class="font-extrabold text-slate-800 text-sm whitespace-nowrap">${item.name}</span>
+                                <span class="font-mono text-[11px] text-slate-500 font-bold">${item.nis}</span>
+                            </div>
                         </td>
-                        <td class="px-3 py-3 font-medium text-slate-600"><span class="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">${item.className}</span></td>
-                        <td class="px-2 py-3 text-center font-bold text-emerald-600">${st.hadir}</td>
-                        <td class="px-2 py-3 text-center font-semibold text-orange-500">${st.terlambat}</td>
-                        <td class="px-2 py-3 text-center font-semibold text-amber-500">${st.sakit}</td>
-                        <td class="px-2 py-3 text-center font-semibold text-blue-500">${st.izin}</td>
-                        <td class="px-2 py-3 text-center font-bold text-red-600">${st.alpha}</td>
-                        <td class="px-4 py-3">${lastSessionText}</td>
-                        <td class="px-3 py-3 text-center">
-                            <span class="inline-block px-2 py-0.5 rounded text-[11px] border ${pctBadge}">
+                        <td class="px-4 py-4">
+                            <span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap badge-print">${item.className}</span>
+                        </td>
+                        <td class="px-3 py-4 text-center font-black text-emerald-600 text-lg">${st.hadir}</td>
+                        <td class="px-3 py-4 text-center font-bold text-orange-500 text-base">${st.terlambat}</td>
+                        <td class="px-3 py-4 text-center font-bold text-amber-500 text-base">${st.sakit}</td>
+                        <td class="px-3 py-4 text-center font-bold text-blue-500 text-base">${st.izin}</td>
+                        <td class="px-3 py-4 text-center font-black text-red-600 text-lg">${st.alpha}</td>
+                        <td class="px-6 py-4">${lastSessionText}</td>
+                        <td class="px-4 py-4 text-center">
+                            <div class="inline-flex items-center justify-center w-12 h-12 rounded-full ${pctBadge} font-black text-sm border-2 border-white shadow-sm">
                                 ${st.total > 0 ? persentase + '%' : '-'}
-                            </span>
+                            </div>
                         </td>
-                        <td class="px-3 py-3 text-center no-print">
-                            <button onclick="openStudentModal('${item.nis}')" class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded border border-indigo-200 text-[11px] font-semibold transition-colors">
-                                Lihat Sesi (${st.logs.length})
+                        <td class="px-6 py-4 text-center no-print">
+                            <button onclick="openStudentModal('${item.nis}')" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 rounded-xl border border-slate-200 text-xs font-bold transition-all shadow-sm hover:shadow flex items-center gap-2 mx-auto">
+                                Sesi <span class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded-md">${st.logs.length}</span>
                             </button>
                         </td>
                     </tr>`;
                 }).join('');
             }
 
-            // Update Cards Stats
             document.getElementById('stat-total-siswa').innerText = data.length;
             document.getElementById('stat-total-hadir').innerText = sumHadir;
             document.getElementById('stat-total-terlambat').innerText = sumTerlambat;
@@ -717,25 +799,24 @@
             document.getElementById('stat-total-alpha').innerText = sumAlpha;
             document.getElementById('stat-total-alert').innerText = totalAlertCount;
 
-            document.getElementById('recap-count-badge').innerText = `${data.length} Siswa Terdaftar`;
+            document.getElementById('recap-count-badge').innerText = `${data.length} Siswa Tersaring`;
         }
 
         function renderLogTable(logs) {
             const tbody = document.getElementById('log-table-body');
             
             if (logs.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="px-6 py-10 text-center text-slate-400">Tidak ada transaksi log sesi presensi.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="px-6 py-16 text-center text-slate-400 font-bold text-lg">Tidak ada transaksi log sesi presensi.</td></tr>`;
                 return;
             }
 
-            // Tampilkan 100 log terbaru
             const sortedLogs = [...logs].reverse().slice(0, 150);
 
             tbody.innerHTML = sortedLogs.map(l => {
                 let timeStr = '-';
                 if(l.timestamp) {
                     const d = new Date(l.timestamp);
-                    if(!isNaN(d)) timeStr = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                    if(!isNaN(d)) timeStr = `<span class="font-bold text-slate-700">${d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' })}</span><br><span class="text-xs text-slate-400 font-medium">${d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span>`;
                 }
 
                 const mapel = l.mapel || l.mata_pelajaran || 'Umum';
@@ -743,28 +824,33 @@
                 const status = (l.status || 'Hadir').toLowerCase();
                 const guru = l.guru || l.pengajar || '-';
 
-                let statusBadge = "bg-emerald-100 text-emerald-700 border-emerald-200";
-                if(status === 'terlambat') statusBadge = "bg-orange-100 text-orange-700 border-orange-200";
-                else if(status === 'sakit') statusBadge = "bg-amber-100 text-amber-700 border-amber-200";
-                else if(status === 'izin') statusBadge = "bg-blue-100 text-blue-700 border-blue-200";
-                else if(status === 'alpha') statusBadge = "bg-red-100 text-red-700 border-red-200 font-bold";
+                let statusBadge = "bg-emerald-50 text-emerald-600 border-emerald-200";
+                if(status === 'terlambat') statusBadge = "bg-orange-50 text-orange-600 border-orange-200";
+                else if(status === 'sakit') statusBadge = "bg-amber-50 text-amber-600 border-amber-200";
+                else if(status === 'izin') statusBadge = "bg-blue-50 text-blue-600 border-blue-200";
+                else if(status === 'alpha') statusBadge = "bg-red-50 text-red-600 border-red-200 shadow-sm";
 
                 return `
                 <tr class="hover:bg-slate-50 transition-colors">
-                    <td class="px-4 py-2.5 font-mono text-[11px] text-slate-500">${timeStr}</td>
-                    <td class="px-4 py-2.5 font-mono text-slate-600">${l.nis || '-'}</td>
-                    <td class="px-4 py-2.5 font-bold text-slate-800">${l.name || l.nama || '-'}</td>
-                    <td class="px-3 py-2.5 text-slate-600"><span class="bg-slate-100 px-1.5 py-0.5 rounded text-[10px] border border-slate-200">${l.className || l.kelas || '-'}</span></td>
-                    <td class="px-4 py-2.5 font-semibold text-slate-700">${mapel}</td>
-                    <td class="px-3 py-2.5 text-center font-mono">${sesi}</td>
-                    <td class="px-3 py-2.5 text-center">
-                        <span class="px-2 py-0.5 rounded text-[10px] uppercase font-bold border ${statusBadge}">${status}</span>
+                    <td class="px-6 py-3 text-sm">${timeStr}</td>
+                    <td class="px-6 py-3">
+                        <div class="flex flex-col">
+                            <span class="font-extrabold text-slate-800 text-sm whitespace-nowrap">${l.name || l.nama || '-'}</span>
+                            <span class="font-mono text-[11px] text-slate-400 font-bold">${l.nis || '-'}</span>
+                        </div>
                     </td>
-                    <td class="px-4 py-2.5 text-slate-500 text-[11px]">${l.keterangan || ('Guru: ' + guru)}</td>
+                    <td class="px-4 py-3"><span class="bg-slate-100 px-2.5 py-1 rounded-lg text-xs font-bold text-slate-600 whitespace-nowrap badge-print">${l.className || l.kelas || '-'}</span></td>
+                    <td class="px-6 py-3 font-bold text-slate-700 text-sm">${mapel}</td>
+                    <td class="px-4 py-3 text-center font-black text-slate-600 text-lg">${sesi}</td>
+                    <td class="px-4 py-3 text-center">
+                        <span class="px-3 py-1 rounded-lg text-[10px] tracking-wider uppercase font-black border ${statusBadge}">${status}</span>
+                    </td>
+                    <td class="px-6 py-3 text-slate-500 text-xs font-medium">${l.keterangan || ('Pengajar: ' + guru)}</td>
                 </tr>`;
             }).join('');
         }
 
+        // REDESIGNED CETAK KARTU WALI KELAS
         function renderWaliKelasTab(data) {
             const alertContainer = document.getElementById('alert-students-list');
             const waSelect = document.getElementById('wa-student-select');
@@ -777,26 +863,38 @@
             });
 
             if(alertStudents.length === 0) {
-                alertContainer.innerHTML = `<div class="col-span-full p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg text-xs text-center font-medium">🎉 Luar biasa! Tidak ada siswa dengan masalah kehadiran tinggi / Alpha menumpuk saat ini.</div>`;
+                alertContainer.innerHTML = `<div class="col-span-full p-8 bg-emerald-50 border-2 border-dashed border-emerald-200 text-emerald-700 rounded-3xl text-center font-bold text-lg">🎉 Luar biasa! Tidak ada siswa dengan masalah kehadiran tinggi saat ini.</div>`;
             } else {
                 alertContainer.innerHTML = alertStudents.map(s => `
-                    <div class="p-3.5 bg-red-50/50 border border-red-200 rounded-lg flex flex-col justify-between space-y-2">
-                        <div>
-                            <div class="flex justify-between items-start">
-                                <h4 class="font-bold text-sm text-slate-800">${s.name}</h4>
-                                <span class="bg-red-100 text-red-700 font-bold px-2 py-0.5 rounded text-[10px]">Alpha: ${s.stats.alpha}x</span>
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-md hover:shadow-xl transition-all flex flex-col justify-between overflow-hidden relative group print-card">
+                        <div class="absolute top-0 left-0 w-1.5 h-full bg-red-500 no-print"></div>
+                        <div class="p-6 relative z-10">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center font-black text-xl no-print">
+                                    ${getInitials(s.name)}
+                                </div>
+                                <span class="bg-red-500 text-white font-black px-3 py-1 rounded-xl text-xs shadow-sm shadow-red-500/40 badge-print">
+                                    ALPHA: ${s.stats.alpha}x
+                                </span>
                             </div>
-                            <p class="text-xs text-slate-500">NIS: ${s.nis} &bull; Kelas: ${s.className}</p>
-                            <p class="text-xs text-red-600 font-medium mt-1">Sakit: ${s.stats.sakit} | Izin: ${s.stats.izin} | Terlambat: ${s.stats.terlambat}</p>
+                            <h4 class="font-extrabold text-lg text-slate-800 leading-tight mb-1">${s.name}</h4>
+                            <p class="text-xs font-bold text-slate-500 mb-4 tracking-wide">${s.nis} &bull; ${s.className}</p>
+                            
+                            <div class="grid grid-cols-3 gap-2 text-center bg-slate-50 rounded-xl p-2 border border-slate-100">
+                                <div class="flex flex-col"><span class="text-[10px] font-bold text-slate-400 uppercase">Sakit</span><span class="font-black text-amber-500">${s.stats.sakit}</span></div>
+                                <div class="flex flex-col border-x border-slate-200"><span class="text-[10px] font-bold text-slate-400 uppercase">Izin</span><span class="font-black text-blue-500">${s.stats.izin}</span></div>
+                                <div class="flex flex-col"><span class="text-[10px] font-bold text-slate-400 uppercase">Late</span><span class="font-black text-orange-500">${s.stats.terlambat}</span></div>
+                            </div>
                         </div>
-                        <button onclick="selectStudentForWA('${s.nis}')" class="w-full mt-2 py-1.5 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-semibold transition-colors">
-                            Kirim WA Panggilan Ortu
-                        </button>
+                        <div class="bg-slate-50 px-6 py-4 border-t border-slate-100 no-print">
+                            <button onclick="selectStudentForWA('${s.nis}')" class="w-full py-2.5 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-sm font-bold transition-all shadow-md group-hover:-translate-y-0.5">
+                                Tindak Lanjut via WA
+                            </button>
+                        </div>
                     </div>
                 `).join('');
             }
 
-            // Populate Dropdown WA
             waSelect.innerHTML = '<option value="">-- Pilih Siswa --</option>';
             data.forEach(s => {
                 waSelect.innerHTML += `<option value="${s.nis}">${s.name} (${s.className}) - Alpha: ${s.stats.alpha}</option>`;
@@ -806,7 +904,7 @@
         function selectStudentForWA(nis) {
             document.getElementById('wa-student-select').value = nis;
             generateWAMessage();
-            document.getElementById('wa-student-select').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('wa-message-preview').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function generateWAMessage() {
@@ -824,19 +922,23 @@
             const st = student.stats;
             const msg = `Assalamu'alaikum Wr. Wb.
 
-Bapak/Ibu Orang Tua/Wali dari siswa:
+Yth. Bapak/Ibu Orang Tua/Wali dari siswa:
 Nama : ${student.name}
 NIS  : ${student.nis}
 Kelas: ${student.className}
 
-Menginformasikan rekapitulasi kehadiran dan sesi mata pelajaran putra/putri Bapak/Ibu di MAS Miftahul Ulum Lenteng:
-- Sesi Hadir : ${st.hadir}
-- Sesi Terlambat : ${st.terlambat}
-- Sesi Sakit : ${st.sakit}
-- Sesi Izin : ${st.izin}
-- Sesi Tanpa Keterangan (Alpha): ${st.alpha} Sesi
+Bersama pesan ini, kami bermaksud menginformasikan rekapitulasi kehadiran putra/putri Bapak/Ibu pada sesi Kegiatan Belajar Mengajar (KBM) di MAS Miftahul Ulum Lenteng:
 
-Mohon kerjasamanya untuk membimbing putra/putri Bapak/Ibu agar senantiasa disiplin mengikuti kegiatan KBM di madrasah. Terima kasih.
+📊 Rincian Sesi:
+- Hadir Tepat Waktu: ${st.hadir} Sesi
+- Hadir Terlambat: ${st.terlambat} Sesi
+- Keterangan Sakit: ${st.sakit} Sesi
+- Keterangan Izin: ${st.izin} Sesi
+- Tanpa Keterangan (Alpha): ${st.alpha} Sesi ⚠️
+
+Mengingat pentingnya persentase kehadiran, kami mohon kerjasama Bapak/Ibu untuk memberikan bimbingan lebih lanjut agar putra/putri senantiasa disiplin.
+
+Atas perhatian dan kerjasamanya, kami sampaikan terima kasih.
 
 Wassalamu'alaikum Wr. Wb.
 -- Wali Kelas MAS Miftahul Ulum Lenteng --`;
@@ -846,65 +948,82 @@ Wassalamu'alaikum Wr. Wb.
 
         function copyWAMessage() {
             const preview = document.getElementById('wa-message-preview');
-            if(!preview.value) return;
+            if(!preview.value) { alert("Pilih siswa terlebih dahulu!"); return; }
             preview.select();
             navigator.clipboard.writeText(preview.value);
-            alert("Draft pesan berhasil disalin!");
+            
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `✅ Tersalin!`;
+            btn.classList.replace('text-slate-700', 'text-green-600');
+            setTimeout(() => { btn.innerHTML = originalHTML; btn.classList.replace('text-green-600', 'text-slate-700'); }, 2000);
         }
 
         function sendViaWA() {
             const preview = document.getElementById('wa-message-preview');
-            if(!preview.value) return;
+            if(!preview.value) { alert("Pilih siswa terlebih dahulu!"); return; }
             const encoded = encodeURIComponent(preview.value);
             window.open(`https://api.whatsapp.com/send?text=${encoded}`, '_blank');
         }
 
-        // MODAL DETAIL SESI SISWA
+        // REDESIGNED MODAL TIMELINE
         function openStudentModal(nis) {
             const student = currentFilteredData.find(s => s.nis === nis);
             if (!student) return;
 
-            document.getElementById('modal-student-name').innerText = `Riwayat Sesi Presensi: ${student.name}`;
+            document.getElementById('modal-avatar').innerText = getInitials(student.name);
+            document.getElementById('modal-student-name').innerText = student.name;
             document.getElementById('modal-student-info').innerText = `NIS: ${student.nis} | Kelas: ${student.className} | Total Record: ${student.stats.logs.length}`;
 
             const container = document.getElementById('modal-student-timeline');
             
             if(student.stats.logs.length === 0) {
-                container.innerHTML = `<p class="text-center text-slate-400 py-6 text-xs">Belum ada riwayat sesi mata pelajaran tercatat untuk siswa ini.</p>`;
+                container.innerHTML = `<div class="text-center text-slate-400 py-10 font-bold">Belum ada riwayat sesi tercatat.</div>`;
             } else {
-                container.innerHTML = student.stats.logs.map(log => {
+                container.innerHTML = `<div class="relative border-l-2 border-slate-200 ml-3 md:ml-4 space-y-6 pb-4 pt-2">` + 
+                student.stats.logs.map(log => {
                     let timeStr = '-';
+                    let timeOnly = '';
                     if(log.timestamp) {
                         const d = new Date(log.timestamp);
-                        if(!isNaN(d)) timeStr = d.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' }) + ' (' + d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) + ')';
+                        if(!isNaN(d)) {
+                            timeStr = d.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' });
+                            timeOnly = d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                        }
                     }
 
                     const mapel = log.mapel || log.mata_pelajaran || 'Mata Pelajaran Umum';
                     const sesi = log.sesi || log.jam_ke || '1';
                     const status = (log.status || 'Hadir').toLowerCase();
 
-                    let borderClr = "border-l-emerald-500";
-                    let statusTxtClass = "text-emerald-700 bg-emerald-50 border-emerald-200";
+                    let dotClr = "bg-emerald-500 ring-emerald-100";
+                    let badgeClass = "text-emerald-700 bg-emerald-100";
 
-                    if(status === 'terlambat') { borderClr = "border-l-orange-500"; statusTxtClass = "text-orange-700 bg-orange-50 border-orange-200"; }
-                    else if(status === 'sakit') { borderClr = "border-l-amber-500"; statusTxtClass = "text-amber-700 bg-amber-50 border-amber-200"; }
-                    else if(status === 'izin') { borderClr = "border-l-blue-500"; statusTxtClass = "text-blue-700 bg-blue-50 border-blue-200"; }
-                    else if(status === 'alpha') { borderClr = "border-l-red-500"; statusTxtClass = "text-red-700 bg-red-50 border-red-200 font-bold"; }
+                    if(status === 'terlambat') { dotClr = "bg-orange-500 ring-orange-100"; badgeClass = "text-orange-700 bg-orange-100"; }
+                    else if(status === 'sakit') { dotClr = "bg-amber-500 ring-amber-100"; badgeClass = "text-amber-700 bg-amber-100"; }
+                    else if(status === 'izin') { dotClr = "bg-blue-500 ring-blue-100"; badgeClass = "text-blue-700 bg-blue-100"; }
+                    else if(status === 'alpha') { dotClr = "bg-red-500 ring-red-100"; badgeClass = "text-red-700 bg-red-100 font-black shadow-sm"; }
 
                     return `
-                    <div class="p-3 bg-white border border-slate-200 rounded-lg border-l-4 ${borderClr} shadow-sm text-xs space-y-1">
-                        <div class="flex justify-between items-start">
-                            <span class="font-bold text-slate-800 text-sm">${mapel}</span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${statusTxtClass}">${status}</span>
+                    <div class="relative pl-6 md:pl-8">
+                        <div class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full ${dotClr} ring-4"></div>
+                        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h5 class="font-extrabold text-slate-800 text-sm md:text-base">${mapel}</h5>
+                                    <p class="text-[11px] font-bold text-slate-400">${timeStr} &bull; ${timeOnly}</p>
+                                </div>
+                                <span class="px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${badgeClass}">${status}</span>
+                            </div>
+                            <div class="flex flex-col gap-2 mt-2">
+                                <span class="inline-block px-2.5 py-1 bg-slate-50 text-slate-600 rounded-lg text-[11px] font-bold border border-slate-100 w-max">
+                                    📌 Sesi / Jam Ke: ${sesi}
+                                </span>
+                                ${log.keterangan ? `<p class="text-xs font-medium text-slate-500 bg-slate-50 p-2.5 rounded-xl border border-slate-100 italic">" ${log.keterangan} "</p>` : ''}
+                            </div>
                         </div>
-                        <div class="flex flex-wrap gap-2 text-[11px] text-slate-500">
-                            <span>🕒 ${timeStr}</span>
-                            <span>&bull;</span>
-                            <span>📌 Jam/Sesi Ke: ${sesi}</span>
-                        </div>
-                        ${log.keterangan ? `<p class="text-[11px] text-slate-600 bg-slate-50 p-1.5 rounded mt-1 border border-slate-100">Catatan: ${log.keterangan}</p>` : ''}
                     </div>`;
-                }).join('');
+                }).join('') + `</div>`;
             }
 
             document.getElementById('modal-detail-student').classList.remove('hidden');
@@ -914,7 +1033,6 @@ Wassalamu'alaikum Wr. Wb.
             document.getElementById('modal-detail-student').classList.add('hidden');
         }
 
-        // EXPORT EXCEL (CSV)
         function exportToCSV() {
             if(currentFilteredData.length === 0) {
                 alert("Tidak ada data untuk di-export.");
@@ -935,7 +1053,7 @@ Wassalamu'alaikum Wr. Wb.
             const link = document.createElement("a");
             const url = URL.createObjectURL(blob);
             link.setAttribute("href", url);
-            link.setAttribute("download", `Rekap_Presensi_MAS_Miftahul_Ulum_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `Laporan_Sesi_MAS_Miftahul_Ulum_${new Date().toISOString().slice(0,10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
