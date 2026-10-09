@@ -345,7 +345,7 @@
                         <thead class="bg-white border-b-2 border-slate-200">
                             <tr>
                                 <th class="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Siswa (NIS)</th>
-                                <th class="px-4 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Kelas</th>
+                                <th class="px-4 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider whitespace-nowrap">Kelas / Mapel Diikuti</th>
                                 <th class="px-3 py-4 text-center text-xs font-bold text-emerald-600 uppercase tracking-wider whitespace-nowrap">Hadir</th>
                                 <th class="px-3 py-4 text-center text-xs font-bold text-orange-500 uppercase tracking-wider whitespace-nowrap">Late</th>
                                 <th class="px-3 py-4 text-center text-xs font-bold text-amber-500 uppercase tracking-wider whitespace-nowrap">Sakit</th>
@@ -508,6 +508,39 @@
             await fetchSpreadsheetData();
         });
 
+        // ========================================================
+        // HELPER FUNCTIONS UNTUK MENANGKAP KEY DINAMIS DARI GOOGLE SHEET
+        // Menangkap kemungkinan nama kolom seperti: "Mata Pelajaran", "Mapel", "Subject" dsb.
+        // ========================================================
+        function getMapel(log) {
+            if (log.mapel) return String(log.mapel);
+            if (log.mata_pelajaran) return String(log.mata_pelajaran);
+            
+            // Scan semua keys yang masuk dari JSON
+            for (let key in log) {
+                let k = key.toLowerCase();
+                if (k.includes('mapel') || k.includes('pelajaran') || k.includes('subject')) {
+                    return String(log[key]);
+                }
+            }
+            return 'Mapel Umum';
+        }
+
+        // Sama halnya dengan sesi/jam_ke
+        function getSesi(log) {
+            if (log.sesi) return String(log.sesi);
+            if (log.jam_ke) return String(log.jam_ke);
+            
+            for (let key in log) {
+                let k = key.toLowerCase();
+                if (k.includes('sesi') || k.includes('jam')) {
+                    return String(log[key]);
+                }
+            }
+            return '1';
+        }
+        // ========================================================
+
         async function fetchSpreadsheetData() {
             const spinner = document.getElementById('loading-spinner');
             const dashboard = document.getElementById('main-dashboard');
@@ -548,17 +581,17 @@
             const sesiSet = new Set();
 
             allStudents.forEach(s => { 
-                if(s.className && s.className.trim() !== '') classSet.add(s.className.trim()); 
+                if(s.className && String(s.className).trim() !== '') classSet.add(String(s.className).trim()); 
             });
             
             allHistory.forEach(h => { 
-                if(h.className && h.className.trim() !== '') classSet.add(h.className.trim());
+                if(h.className && String(h.className).trim() !== '') classSet.add(String(h.className).trim());
                 
-                const mapel = h.mapel || h.mata_pelajaran || h.subject;
+                const mapel = getMapel(h);
                 if(mapel && mapel.trim() !== '') mapelSet.add(mapel.trim());
 
-                const sesi = h.sesi || h.jam_ke || h.session;
-                if(sesi && String(sesi).trim() !== '') sesiSet.add(String(sesi).trim());
+                const sesi = getSesi(h);
+                if(sesi && sesi.trim() !== '') sesiSet.add(sesi.trim());
             });
 
             const classSelect = document.getElementById('filter-class');
@@ -618,8 +651,8 @@
             const monthVal = document.getElementById('filter-month').value;
 
             let filteredHistory = allHistory.filter(h => {
-                const hMapel = (h.mapel || h.mata_pelajaran || h.subject || '').trim();
-                const hSesi = String(h.sesi || h.jam_ke || h.session || '').trim();
+                const hMapel = getMapel(h).trim();
+                const hSesi = getSesi(h).trim();
                 const hStatus = (h.status || 'Hadir').toLowerCase();
 
                 if (mapelVal !== "" && hMapel !== mapelVal) return false;
@@ -647,7 +680,7 @@
             filteredHistory.forEach(log => {
                 const nis = String(log.nis).trim();
                 if (!historyAgg[nis]) {
-                    historyAgg[nis] = { hadir: 0, terlambat: 0, sakit: 0, izin: 0, alpha: 0, total: 0, logs: [] };
+                    historyAgg[nis] = { hadir: 0, terlambat: 0, sakit: 0, izin: 0, alpha: 0, total: 0, logs: [], mapels: new Set() };
                 }
 
                 const stat = (log.status || 'Hadir').toLowerCase();
@@ -659,11 +692,12 @@
 
                 historyAgg[nis].total++;
                 historyAgg[nis].logs.push(log);
+                historyAgg[nis].mapels.add(getMapel(log)); // Catat mapel yang diikuti
             });
 
             let aggregateData = allStudents.map(student => {
                 const nis = String(student.nis).trim();
-                const stats = historyAgg[nis] || { hadir: 0, terlambat: 0, sakit: 0, izin: 0, alpha: 0, total: 0, logs: [] };
+                const stats = historyAgg[nis] || { hadir: 0, terlambat: 0, sakit: 0, izin: 0, alpha: 0, total: 0, logs: [], mapels: new Set() };
                 return {
                     nis: nis,
                     name: student.name,
@@ -740,8 +774,8 @@
                     let lastSessionText = '<span class="text-slate-400 italic font-medium text-xs">Belum ada sesi</span>';
                     if (st.logs.length > 0) {
                         const lastLog = st.logs[st.logs.length - 1];
-                        const mapel = lastLog.mapel || lastLog.mata_pelajaran || 'Mapel Umum';
-                        const sesi = lastLog.sesi || lastLog.jam_ke || '-';
+                        const mapel = getMapel(lastLog);
+                        const sesi = getSesi(lastLog);
                         const statusLog = (lastLog.status || 'Hadir').toUpperCase();
                         
                         let dateFmt = '';
@@ -754,12 +788,15 @@
 
                         lastSessionText = `<div class="flex flex-col gap-0.5">
                             <div class="flex items-center gap-2">
-                                <span class="font-extrabold text-slate-700 text-xs">${mapel}</span>
-                                <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-full font-bold text-slate-500">Sesi ${sesi}</span>
+                                <span class="font-extrabold text-slate-700 text-xs truncate max-w-[150px]" title="${mapel}">${mapel}</span>
+                                <span class="text-[10px] bg-slate-100 px-2 py-0.5 rounded-full font-bold text-slate-500 whitespace-nowrap">Sesi ${sesi}</span>
                             </div>
                             <span class="text-[11px] text-slate-500 font-medium">${dateFmt} &bull; <strong class="${statColor}">${statusLog}</strong></span>
                         </div>`;
                     }
+
+                    // Render badge mapel-mapel yang diikuti
+                    const followedMapels = Array.from(st.mapels || []).join(', ');
 
                     return `
                     <tr class="hover:bg-slate-50 transition-all ${isPerluPerhatian ? 'bg-red-50/40 hover:bg-red-50/60' : ''}">
@@ -771,6 +808,7 @@
                         </td>
                         <td class="px-4 py-4">
                             <span class="bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg text-xs font-extrabold whitespace-nowrap badge-print">${item.className}</span>
+                            ${followedMapels ? `<div class="mt-2 text-[10px] font-medium text-slate-400 max-w-[150px] truncate" title="Mapel Diikuti: ${followedMapels}">${followedMapels}</div>` : ''}
                         </td>
                         <td class="px-3 py-4 text-center font-black text-emerald-600 text-lg">${st.hadir}</td>
                         <td class="px-3 py-4 text-center font-bold text-orange-500 text-base">${st.terlambat}</td>
@@ -819,8 +857,8 @@
                     if(!isNaN(d)) timeStr = `<span class="font-bold text-slate-700">${d.toLocaleDateString('id-ID', { day: '2-digit', month: 'short' })}</span><br><span class="text-xs text-slate-400 font-medium">${d.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })}</span>`;
                 }
 
-                const mapel = l.mapel || l.mata_pelajaran || 'Umum';
-                const sesi = l.sesi || l.jam_ke || '1';
+                const mapel = getMapel(l);
+                const sesi = getSesi(l);
                 const status = (l.status || 'Hadir').toLowerCase();
                 const guru = l.guru || l.pengajar || '-';
 
@@ -992,8 +1030,8 @@ Wassalamu'alaikum Wr. Wb.
                         }
                     }
 
-                    const mapel = log.mapel || log.mata_pelajaran || 'Mata Pelajaran Umum';
-                    const sesi = log.sesi || log.jam_ke || '1';
+                    const mapel = getMapel(log);
+                    const sesi = getSesi(log);
                     const status = (log.status || 'Hadir').toLowerCase();
 
                     let dotClr = "bg-emerald-500 ring-emerald-100";
@@ -1039,14 +1077,15 @@ Wassalamu'alaikum Wr. Wb.
                 return;
             }
 
-            let csv = "\uFEFFNIS,Nama Siswa,Kelas,Hadir,Terlambat,Sakit,Izin,Alpha,Total Sesi,Persentase Kehadiran\n";
+            let csv = "\uFEFFNIS,Nama Siswa,Kelas,Mapel Terakumulasi,Hadir,Terlambat,Sakit,Izin,Alpha,Total Sesi,Persentase Kehadiran\n";
 
             currentFilteredData.forEach(item => {
                 const st = item.stats;
                 const totalHadirPositif = st.hadir + st.terlambat;
                 const persentase = st.total > 0 ? Math.round((totalHadirPositif / st.total) * 100) : 0;
+                const joinedMapel = Array.from(st.mapels || []).join('; ');
 
-                csv += `"${item.nis}","${item.name}","${item.className}",${st.hadir},${st.terlambat},${st.sakit},${st.izin},${st.alpha},${st.total},"${persentase}%"\n`;
+                csv += `"${item.nis}","${item.name}","${item.className}","${joinedMapel}",${st.hadir},${st.terlambat},${st.sakit},${st.izin},${st.alpha},${st.total},"${persentase}%"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
